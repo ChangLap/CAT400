@@ -498,14 +498,14 @@ def firebaseRead():
 
 @app.route('/firebaseReadandConvert', methods=['POST'])
 def firebaseReadandConvert():
-
+    
     key = 'AIzaSyCBbOViqvY-PdWMo3zROZyQVRo337k7QTM'
 
     # read coordinates from firebase
     ref = db.reference("/coordinate/rider1")
     coor = ref.get()
     latlng = '' + coor['lat'] + ',' + coor['long']
-
+    print("new")
     request = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latlng + '&key=' + key
     apiResult = urllib.request.urlopen(request).read()
     response = json.loads(apiResult)
