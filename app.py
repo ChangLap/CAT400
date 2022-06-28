@@ -526,8 +526,6 @@ def firebaseWriteAddresses(current, pickup, dest, result):
     currentList = []
     route = result[0]
     routeLength = 0
-
-    print(route)
     
     ref = db.reference('addressList/rider1')
     ref.delete()
