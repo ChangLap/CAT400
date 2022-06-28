@@ -1,0 +1,69 @@
+
+INSERTING A LIST FROM CSV
+BULK INSERT [yellow_tripdata_2016_01]
+FROM 'C:\Users\chang\Desktop\yellow_tripdata_2016-01.csv'
+WITH (FIRSTROW = 2,
+    FIELDTERMINATOR = ',',
+    ROWTERMINATOR='\n',
+    BATCHSIZE=250000,
+	MAXERRORS=2);	
+
+ADDING ID TO EXISTING TABLE WHICH WITHOUT A PRIMARY ID
+ALTER TABLE [IMPORT].[dbo].[yellow_tripdata_2016_01] DROP COLUMN ID 
+ALTER TABLE [IMPORT].[dbo].[yellow_tripdata_2016_01] ADD ID INT IDENTITY(1,1)
+
+INSERT FROM ONE TABLE TO ANOTHER TABLE BY DIRECTLY COPY THE DATA 
+DECLARE @count INT;
+DECLARE @Date2 datetime2 = '2016-01-02';
+DECLARE @Date1 datetime2 = '2016-01-01';
+SET @count = 1;
+    
+WHILE @count < 366
+BEGIN
+   INSERT INTO [FYP].[dbo].[IMPORTED_DATA] ([VendorID]
+      ,[tpep_pickup_datetime]
+      ,[tpep_dropoff_datetime]
+      ,[passenger_count]
+      ,[trip_distance]
+      ,[pickup_longitude]
+      ,[pickup_latitude]
+      ,[RatecodeID]
+      ,[store_and_fwd_flag]
+      ,[dropoff_longitude]
+      ,[dropoff_latitude]
+      ,[payment_type]
+      ,[fare_amount]
+      ,[extra]
+      ,[mta_tax]
+      ,[tip_amount]
+      ,[tolls_amount]
+      ,[improvement_surcharge]
+      ,[total_amount])
+    SELECT TOP (100) [VendorID]
+      ,[tpep_pickup_datetime]
+      ,[tpep_dropoff_datetime]
+      ,[passenger_count]
+      ,[trip_distance]
+      ,[pickup_longitude]
+      ,[pickup_latitude]
+      ,[RatecodeID]
+      ,[store_and_fwd_flag]
+      ,[dropoff_longitude]
+      ,[dropoff_latitude]
+      ,[payment_type]
+      ,[fare_amount]
+      ,[extra]
+      ,[mta_tax]
+      ,[tip_amount]
+      ,[tolls_amount]
+      ,[improvement_surcharge]
+      ,[total_amount] 
+    FROM [IMPORT].[dbo].[yellow_tripdata_2016_01]
+	WHERE tpep_pickup_datetime < @Date2 AND tpep_pickup_datetime >= @Date1
+   
+	SET @Date1 = DATEADD(DD,1,@DATE1)
+	SET @Date2 = DATEADD(DD,1,@DATE2)
+	PRINT @Date1
+	PRINT @Date2
+	SET @count = @count + 1;
+END;

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4 mx-auto">
+            <select id='monthOption' class="form-select form-select-lg mb-3" aria-label="Default select example">
+                <option selected disabled>Select Month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+        </div>
+        <div class="col-4 mx-auto">
+            <select id='yearOption' class="form-select form-select-lg mb-3" aria-label="Default select example">
+                <option selected disabled>Select Year</option>
+                <option value="2016">2016</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <button id="confirmButton" type="button" class="btn btn-info btn-lg">
+                Confirm
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Duration</h3>
+                    <p id="averageDuration" class="card-text">
+                        
+                    </p>
+                    <div class="card-img-bottom">
+                        <canvas id="durationChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Distance</h3>
+                    <p id="averageDistance" class="card-text">
+                        
+                    </p>
+                    <div class="card-img-bottom">
+                        <canvas id="distanceChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Total amount in RM</h3>
+                    <p id="averageAmount" class="card-text">
+                        
+                    </p>
+                    <div class="card-img-bottom">
+                        <canvas id="amountChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8 mx-auto top10">
+            <h2>Duration</h2>
+            <div id="duration">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8 mx-auto">
+            <h2>Distance</h2>
+            <div id="distance">
+                
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8 mx-auto">
+            <h2>Amount</h2>
+            <div id="amount">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
+    integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+<!-- self created js  -->
+<script type="text/javascript" src="{{ url_for('static', filename='js/chartScript.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#nav-bar > nav > div > div > a:nth-child(3)").addClass('active');
+    });
+</script>
+
+{% endblock %}

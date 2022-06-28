@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div id="row_dashboard" class="row">
+        <div class="col-12 col-md-6 col-lg-4">
+            <a href="{{ url_for('firstPage') }}">
+                <div class="card text-center card_dashboard">
+                    <span class="material-icons-round card_icon">route</span>
+                    <div class="card-body">
+                        <h2 class="card-text">
+                            Route Optimization
+                        </h2>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <a href="{{ url_for('secondPage') }}">
+                <div class="card text-center card_dashboard">
+                    <span class="material-icons-round card_icon">auto_graph</span>
+                    <div class="card-body">
+                        <h2 class="card-text">
+                            Data Visualization and Reporting
+                        </h2>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- <div class="col-12 col-md-6 col-lg-4">
+            
+                <div class="card text-center card_dashboard">
+                    <span class="material-icons-sharp card_icon">map</span>
+                    <div class="card-body">
+                        <h2 class="card-text">
+                            Live Map Tracking
+                        </h2>
+                    </div>
+                </div>
+            </a>
+        </div> -->
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $("#nav-bar > nav > div > div > a:nth-child(1)").addClass('active');
+    });
+</script>
+<!-- self created js  -->
+<script type="text/javascript" src="{{ url_for('static', filename='js/dashboardScript.js') }}"></script>
+{% endblock %}
