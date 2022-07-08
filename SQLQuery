@@ -85,7 +85,5 @@ DELETE FROM [IMPORT].[dbo].[yellow_tripdata_2016_01_sample]
 
 CHOOSE RANDOM NUMBER FROM 1 - 10
 DECLARE @ran float;
-
-SET @ran = RAND()*(10-1)+1;
-
+SET @ran = RAND()*(10-1)+1；
 PRINT @ran;
