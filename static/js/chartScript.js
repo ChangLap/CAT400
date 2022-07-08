@@ -2,18 +2,21 @@ $(document).ready(function () {
 
     var jsonOutput = {}
     jsonOutput.label = []
-    jsonOutput.duration = []
-    jsonOutput.distance = []
-    jsonOutput.amount = []
+    jsonOutput.count = []
+
+    jsonOutput.duration = {}
+    jsonOutput.distance = {}
+    jsonOutput.amount = {}
+
+    jsonOutput.duration.data = []
+    jsonOutput.distance.data = []
+    jsonOutput.amount.data = []
 
     var chart1;
     var chart2;
     var chart3;
     graphs();
 
-    var minDuration, minDurationDate, maxDuration, maxDurationDate, avgDuration;
-    var minDistance, minDistanceDate, maxDistance, maxDistanceDate, avgDistance;
-    var minAmount, minAmountDate, maxAmount, maxAmountDate, avgAmount;
     var month;
 
 
@@ -34,30 +37,39 @@ $(document).ready(function () {
         })
             .done(function (response) {
                 jsonOutput.label = response.label;
-                jsonOutput.duration = response.duration;
-                jsonOutput.distance = response.distance;
-                jsonOutput.amount = response.amount;
-
-                minDuration = response.minDuration;
-                minDurationDate = response.minDurationDate;
-                maxDuration = response.maxDuration;
-                maxDurationDate = response.maxDurationDate;
-                avgDuration = response.avgDuration;
-
-                minDistance = response.minDistance;
-                minDistanceDate = response.minDistanceDate;
-                maxDistance = response.maxDistance;
-                maxDistanceDate = response.maxDistanceDate;
-                avgDistance = response.avgDistance;
-
-                minAmount = response.minAmount;
-                minAmountDate = response.minAmountDate;
-                maxAmount = response.maxAmount;
-                maxAmountDate = response.maxAmountDate;
-                avgAmount = response.avgAmount;
-                
+                jsonOutput.count = response.count;
                 month = response.month
 
+                jsonOutput.duration.data = response.duration.data
+                jsonOutput.duration.min = response.duration.min;
+                jsonOutput.duration.minDate = response.duration.minDate;
+                jsonOutput.duration.max = response.duration.max;
+                jsonOutput.duration.maxDate = response.duration.maxDate;
+                jsonOutput.duration.avg = response.duration.avg;
+                jsonOutput.duration.stdev = response.duration.stdev;
+                jsonOutput.duration.var = response.duration.var;
+                jsonOutput.duration.range = response.duration.range;
+
+                jsonOutput.distance.data = response.distance.data
+                jsonOutput.distance.min = response.distance.min;
+                jsonOutput.distance.minDate = response.distance.minDate;
+                jsonOutput.distance.max = response.distance.max;
+                jsonOutput.distance.maxDate = response.distance.maxDate;
+                jsonOutput.distance.avg = response.distance.avg;
+                jsonOutput.distance.stdev = response.distance.stdev;
+                jsonOutput.distance.var = response.distance.var;
+                jsonOutput.distance.range = response.distance.range;
+
+                jsonOutput.amount.data = response.amount.data
+                jsonOutput.amount.min = response.amount.min;
+                jsonOutput.amount.minDate = response.amount.minDate;
+                jsonOutput.amount.max = response.amount.max;
+                jsonOutput.amount.maxDate = response.amount.maxDate;
+                jsonOutput.amount.avg = response.amount.avg;
+                jsonOutput.amount.stdev = response.amount.stdev;
+                jsonOutput.amount.var = response.amount.var;
+                jsonOutput.amount.range = response.amount.range;
+                
                 chart1.destroy();
                 chart2.destroy();
                 chart3.destroy();
@@ -78,9 +90,9 @@ $(document).ready(function () {
         var dis = document.getElementById('averageDistance');
         var amt = document.getElementById('averageAmount');
 
-        dur.innerHTML = 'Average: ' + avgDuration.toFixed(2) + 'seconds';
-        dis.innerHTML = 'Average: ' + avgDistance.toFixed(2) + 'km';
-        amt.innerHTML = 'Average: RM' + avgAmount.toFixed(2);
+        dur.innerHTML = 'Average: ' + jsonOutput.duration.avg.toFixed(2) + 'seconds';
+        dis.innerHTML = 'Average: ' + jsonOutput.distance.avg.toFixed(2) + 'km';
+        amt.innerHTML = 'Average: RM' + jsonOutput.amount.avg.toFixed(2);
     }
 
     function setTable() {
@@ -93,17 +105,35 @@ $(document).ready(function () {
             + 'Minimum duration in '
             + month 
             + '</td><td class="col-3">'
-            + minDuration + ' seconds'
+            + jsonOutput.duration.min + ' seconds'
             + '</td><td>'
-            + jsonOutput.label[minDurationDate]
+            + jsonOutput.label[jsonOutput.duration.minDate]
             + '</td></tr>'
             + '<tr><td >'
             + 'Maximum duration in '
             + month
             + '</td><td>'
-            + maxDuration + ' seconds'
+            + jsonOutput.duration.max + ' seconds'
             + '</td><td>'
-            + jsonOutput.label[maxDurationDate]
+            + jsonOutput.label[jsonOutput.duration.maxDate]
+            + '</td></tr>'
+            + '<tr><td>'
+            + 'Standard Deviation in '
+            + month
+            + '</td><td colspan="2">'
+            + jsonOutput.duration.stdev.toFixed(2) + ' seconds'
+            + '</td></tr>'
+            + '<tr><td>'
+            + 'Variance in '
+            + month
+            + '</td><td colspan="2">'
+            + jsonOutput.duration.var.toFixed(2) + ' seconds'
+            + '</td></tr>'
+            + '<tr><td>'
+            + 'Range in '
+            + month
+            + '</td><td colspan="2">'
+            + jsonOutput.duration.range + ' seconds'
             + '</td></tr>'
             + '</tbody></table>';
 
@@ -113,17 +143,35 @@ $(document).ready(function () {
             + 'Minimum distance in '
             + month 
             + '</td><td class="col-3">'
-            + minDistance.toFixed(2) + ' km'
+            + jsonOutput.distance.min.toFixed(2) + ' km'
             + '</td><td>'
-            + jsonOutput.label[minDistanceDate]
+            + jsonOutput.label[jsonOutput.distance.minDate]
             + '</td></tr>'
             + '<tr><td>'
             + 'Maximum distance in '
             + month
             + '</td><td>'
-            + maxDistance.toFixed(2) + ' km'
+            + jsonOutput.distance.max.toFixed(2) + ' km'
             + '</td><td>'
-            + jsonOutput.label[maxDistanceDate]
+            + jsonOutput.label[jsonOutput.distance.maxDate]
+            + '</td></tr>'
+            + '<tr><td>'
+            + 'Standard Deviation in '
+            + month
+            + '</td><td colspan="2">'
+            + jsonOutput.distance.stdev.toFixed(2) + ' km'
+            + '</td></tr>'
+            + '<tr><td>'
+            + 'Variance in '
+            + month
+            + '</td><td colspan="2">'
+            + jsonOutput.distance.var.toFixed(2) + ' km'
+            + '</td></tr>'
+            + '<tr><td>'
+            + 'Range in '
+            + month
+            + '</td><td colspan="2">'
+            + jsonOutput.distance.range + ' km'
             + '</td></tr>'
             + '</tbody></table>';
 
@@ -133,17 +181,35 @@ $(document).ready(function () {
             + 'Minimum amount in '
             + month 
             + '</td><td class="col-3">'
-            + 'RM' + minAmount.toFixed(2)
+            + 'RM' + jsonOutput.amount.min.toFixed(2)
             + '</td><td>'
-            + jsonOutput.label[minAmountDate]
+            + jsonOutput.label[jsonOutput.amount.minDate]
             + '</td></tr>'
             + '<tr><td>'
             + 'Maximum amount in '
             + month
             + '</td><td>'
-            + 'RM' + maxAmount.toFixed(2)
+            + 'RM' + jsonOutput.amount.max.toFixed(2)
             + '</td><td>'
-            + jsonOutput.label[maxAmountDate]
+            + jsonOutput.label[jsonOutput.amount.maxDate]
+            + '</td></tr>'
+            + '<tr><td>'
+            + 'Standard Deviation in '
+            + month
+            + '</td><td colspan="2">'
+            + 'RM ' + jsonOutput.amount.stdev.toFixed(2)
+            + '</td></tr>'
+            + '<tr><td>'
+            + 'Variance in '
+            + month
+            + '</td><td colspan="2">'
+            + 'RM ' + jsonOutput.amount.var.toFixed(2)
+            + '</td></tr>'
+            + '<tr><td>'
+            + 'Range in '
+            + month
+            + '</td><td colspan="2">'
+            + 'RM ' + jsonOutput.amount.range
             + '</td></tr>'
             + '</tbody></table>';
     }
@@ -154,7 +220,7 @@ $(document).ready(function () {
             labels: labels,
             datasets: [{
                 // label: 'My First Dataset',
-                data: jsonOutput.duration,
+                data: jsonOutput.duration.data,
                 // backgroundColor: [
                 //     'rgba(255, 99, 132, 0.2)',
                 //     'rgba(255, 159, 64, 0.2)',
@@ -203,7 +269,7 @@ $(document).ready(function () {
                 labels: labels,
                 datasets: [{
                     label: 'Time taken',
-                    data: jsonOutput.duration,
+                    data: jsonOutput.duration.data,
                     type: 'bar',
                     // light yellow 
                     backgroundColor: backgroundc,
@@ -273,7 +339,7 @@ $(document).ready(function () {
                 labels: labels,
                 datasets: [{
                     label: 'Distance',
-                    data: jsonOutput.distance,
+                    data: jsonOutput.distance.data,
                     backgroundColor: borderc,
                     borderColor: backgroundc,
                     tension: t,
@@ -329,7 +395,7 @@ $(document).ready(function () {
                 labels: labels,
                 datasets: [{
                     label: 'Amount',
-                    data: jsonOutput.amount,
+                    data: jsonOutput.amount.data,
                     backgroundColor: borderc,
                     borderColor: backgroundc,
                     tension: t,

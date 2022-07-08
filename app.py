@@ -13,6 +13,7 @@ from calendar import month, monthrange
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+import statistics
 
 
 app = Flask(__name__)
@@ -562,9 +563,17 @@ def retrieveData():
 
     output = {}
     output['label'] = []
-    output['duration'] = []
-    output['distance'] = []
-    output['amount'] =[]
+    output['count'] = []
+
+    output['duration'] = {}
+    output['distance'] = {}
+    output['amount'] = {}
+
+    # initialize array for data for each day
+    output['duration']['data'] = []
+    output['distance']['data'] = []
+    output['amount']['data'] = []
+
 
     year = int(yearFromJs)
     month = int(monthFromJs)
@@ -590,11 +599,13 @@ def retrieveData():
         diff = timedelta(days=i)
         x = d + diff
         output['label'].append(x.strftime("%d %b %Y"))
+        output['count'].append(0)
         output['month'] = x.strftime("%B")
 
-        output['duration'].append(0)
-        output['distance'].append(0)
-        output['amount'].append(0)
+        output['duration']['data'].append(0)
+        output['distance']['data'].append(0)
+        output['amount']['data'].append(0)
+
 
     count = 0
     for i in cursor:
@@ -615,30 +626,41 @@ def retrieveData():
 
         diff = delivery - pickup
         
-        # save total seconds instead
-        output['duration'][pickup.day - 1] = output['duration'][pickup.day - 1] + diff.total_seconds()
-        output['distance'][pickup.day - 1] = output['distance'][pickup.day - 1] + distance
-        output['amount'][pickup.day - 1] = output['amount'][pickup.day - 1] + amount
+        #add count for each day
+        output['count'][pickup.day - 1] = output['count'][pickup.day - 1] + 1
 
-    output['minDuration'] = min(output['duration'])
-    output['minDurationDate'] = output['duration'].index(output['minDuration'])
-    output['maxDuration'] = max(output['duration'])
-    output['maxDurationDate'] = output['duration'].index(output['maxDuration'])
-    output['avgDuration'] = sum(output['duration']) / len(output['duration'])
+        # insert duration, distance and amount from each data to the day respectively
+        output['duration']['data'][pickup.day - 1] = output['duration']['data'][pickup.day - 1] + diff.total_seconds()
+        output['distance']['data'][pickup.day - 1] = output['distance']['data'][pickup.day - 1] + distance
+        output['amount']['data'][pickup.day - 1] = output['amount']['data'][pickup.day - 1] + amount
+
+    output['duration']['min'] = min(output['duration']['data'])
+    output['duration']['minDate'] = output['duration']['data'].index(output['duration']['min'])
+    output['duration']['max'] = max(output['duration']['data'])
+    output['duration']['maxDate'] = output['duration']['data'].index(output['duration']['max'])
+    output['duration']['avg'] = sum(output['duration']['data']) / len(output['duration']['data'])
+    output['duration']['stdev'] = statistics.stdev(output['duration']['data'])
+    output['duration']['var'] = statistics.variance(output['duration']['data'])
+    output['duration']['range'] = '' + str("{:.2f}".format(output['duration']['min'])) + ' - ' + str("{:.2f}".format(output['duration']['max']))
+
+    output['distance']['min'] = min(output['distance']['data'])
+    output['distance']['minDate'] = output['distance']['data'].index(output['distance']['min'])
+    output['distance']['max'] = max(output['distance']['data'])
+    output['distance']['maxDate'] = output['distance']['data'].index(output['distance']['max'])
+    output['distance']['avg'] = sum(output['distance']['data']) / len(output['distance']['data'])
+    output['distance']['stdev'] = statistics.stdev(output['distance']['data'])
+    output['distance']['var'] = statistics.variance(output['distance']['data'])
+    output['distance']['range'] = '' + str("{:.2f}".format(output['distance']['min'])) + ' - ' + str("{:.2f}".format(output['distance']['max']))
 
 
-    output['minDistance'] = min(output['distance'])
-    output['minDistanceDate'] = output['distance'].index(output['minDistance'])
-    output['maxDistance'] = max(output['distance'])
-    output['maxDistanceDate'] = output['distance'].index(output['maxDistance'])
-    output['avgDistance'] = sum(output['distance']) / len(output['distance'])
-
-    
-    output['minAmount'] = min(output['amount'])
-    output['minAmountDate'] = output['amount'].index(output['minAmount'])
-    output['maxAmount'] = max(output['amount'])
-    output['maxAmountDate'] = output['amount'].index(output['maxAmount'])
-    output['avgAmount'] = sum(output['amount']) / len(output['amount'])
+    output['amount']['min'] = min(output['amount']['data'])
+    output['amount']['minDate'] = output['amount']['data'].index(output['amount']['min'])
+    output['amount']['max'] = max(output['amount']['data'])
+    output['amount']['maxDate'] = output['amount']['data'].index(output['amount']['max'])
+    output['amount']['avg'] = sum(output['amount']['data']) / len(output['amount']['data'])
+    output['amount']['stdev'] = statistics.stdev(output['amount']['data'])
+    output['amount']['var'] = statistics.variance(output['amount']['data'])
+    output['amount']['range'] = '' + str("{:.2f}".format(output['amount']['min'])) + ' - ' + str("{:.2f}".format(output['amount']['max']))
 
 
     return jsonify(output)

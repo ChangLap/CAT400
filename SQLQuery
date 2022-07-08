@@ -14,13 +14,27 @@ ALTER TABLE [IMPORT].[dbo].[yellow_tripdata_2016_01] ADD ID INT IDENTITY(1,1)
 
 INSERT FROM ONE TABLE TO ANOTHER TABLE BY DIRECTLY COPY THE DATA 
 DECLARE @count INT;
-DECLARE @Date2 datetime2 = '2016-01-02';
-DECLARE @Date1 datetime2 = '2016-01-01';
+DECLARE @monthCurrent INT;
+DECLARE @monthOri INT;
+DECLARE @day INT;
+DECLARE @rand INT;
+
+DECLARE @dest datetime2 = '2016-01-02';
+DECLARE @ori datetime2 = '2016-01-01';
+DECLARE @current datetime2 = '2016-02-01';
+DECLARE @eomonth datetime2;
+
+SET @monthOri = MONTH(@ori)
+SET @eomonth = EOMONTH(@current);
+SET @day = DAY(@eomonth);
+SET @monthCurrent =  MONTH(@current);
 SET @count = 1;
-    
-WHILE @count < 366
+
+WHILE @count <= @day
 BEGIN
-   INSERT INTO [FYP].[dbo].[IMPORTED_DATA] ([VendorID]
+   SET @rand = RAND()*(10-1)+1;
+
+   INSERT INTO [IMPORT].[dbo].[yellow_tripdata_2016_01_sample1] ([VendorID]
       ,[tpep_pickup_datetime]
       ,[tpep_dropoff_datetime]
       ,[passenger_count]
@@ -40,10 +54,10 @@ BEGIN
       ,[improvement_surcharge]
       ,[total_amount])
     SELECT TOP (100) [VendorID]
-      ,[tpep_pickup_datetime]
-      ,[tpep_dropoff_datetime]
+      ,DATEADD(MM,@monthCurrent - @monthOri, DATEADD(SS, @rand, [tpep_pickup_datetime]))
+      ,DATEADD(MM,@monthCurrent - @monthOri, DATEADD(SS, @rand, [tpep_dropoff_datetime]))
       ,[passenger_count]
-      ,[trip_distance]
+      ,[trip_distance] + @rand
       ,[pickup_longitude]
       ,[pickup_latitude]
       ,[RatecodeID]
@@ -57,13 +71,21 @@ BEGIN
       ,[tip_amount]
       ,[tolls_amount]
       ,[improvement_surcharge]
-      ,[total_amount] 
+      ,[total_amount] + @rand
     FROM [IMPORT].[dbo].[yellow_tripdata_2016_01]
-	WHERE tpep_pickup_datetime < @Date2 AND tpep_pickup_datetime >= @Date1
+	  WHERE tpep_pickup_datetime < @dest AND tpep_pickup_datetime >= @ori;
    
-	SET @Date1 = DATEADD(DD,1,@DATE1)
-	SET @Date2 = DATEADD(DD,1,@DATE2)
-	PRINT @Date1
-	PRINT @Date2
+	SET @ori = DATEADD(DD,1,@ori);
+	SET @dest = DATEADD(DD,1,@dest);
 	SET @count = @count + 1;
 END;
+
+DELETE ALL ROWS IN SQL TABLE
+DELETE FROM [IMPORT].[dbo].[yellow_tripdata_2016_01_sample]
+
+CHOOSE RANDOM NUMBER FROM 1 - 10
+DECLARE @ran float;
+
+SET @ran = RAND()*(10-1)+1;
+
+PRINT @ran;

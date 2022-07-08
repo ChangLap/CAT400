@@ -19,8 +19,8 @@ data['pickups_deliveries'] = [
 ]
 
 data['num_vehicles'] = 4
-data['starts'] = [0, 0,0,0]
-data['ends'] = [0, 0,0,0]
+data['starts'] = [0, 0, 0, 0]
+data['ends'] = [0, 0, 0, 0]
 
 data['distance_matrix'] = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
@@ -155,9 +155,9 @@ def optimiseRoute(data):
     # Setting first solution heuristic as search option 
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
     search_parameters.first_solution_strategy = (
-        routing_enums_pb2.FirstSolutionStrategy.GLOBAL_CHEAPEST_ARC)
+        routing_enums_pb2.FirstSolutionStrategy.AUTOMATIC)
     # search_parameters.local_search_metaheuristic = (
-    #     routing_enums_pb2.LocalSearchMetaheuristic.AUTOMATIC)
+    #     routing_enums_pb2.LocalSearchMetaheuristic.SIMULATED_ANNEALING)
     # search_parameters.time_limit.seconds = 30
     # search_parameters.log_search = True
     
