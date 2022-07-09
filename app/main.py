@@ -1,4 +1,3 @@
-from turtle import distance
 from flask import Flask, render_template, jsonify
 from flask import request
 import pyodbc
