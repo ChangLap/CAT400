@@ -29,11 +29,11 @@ firebase_admin.initialize_app(cred, {
 # url_for{"home"} --> /home
 # url_for{"content1"} --> /content1
 @app.route("/")
-def index():
+def initialFunc():
     return render_template('dashboard.html')
 
 @app.route("/dashboard")
-def index():
+def initialFunc():
     return render_template('dashboard.html')
 
 @app.route("/routeOptimization")
