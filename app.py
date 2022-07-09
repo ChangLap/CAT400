@@ -672,6 +672,6 @@ def changeDatetime(string):
     string_temp = datetime.strptime(string,'%Y-%m-%d %H:%M:%S.0%f')
     return string_temp
 
-# this is required function for running web server
-if __name__ == "__main__":
-    app.run(debug=True)
+# # this is required function for running web server
+# if __name__ == "__main__":
+#     app.run(debug=True)
