@@ -31,7 +31,7 @@ firebase_admin.initialize_app(cred, {
 @app.route("/")
 @app.route("/dashboard")
 def initialFunc():
-    return render_template('dashboard.html')
+    return render_template('/templates/dashboard.html')
 
 @app.route("/routeOptimization")
 def firstPage():
