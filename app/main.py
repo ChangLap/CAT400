@@ -29,9 +29,6 @@ firebase_admin.initialize_app(cred, {
 # url_for{"home"} --> /home
 # url_for{"content1"} --> /content1
 @app.route("/")
-def initialFunc():
-    return render_template('dashboard.html')
-
 @app.route("/dashboard")
 def initialFunc():
     return render_template('dashboard.html')
