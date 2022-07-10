@@ -54,11 +54,13 @@ def returnPickupAddress():
     #                     'Trusted_Connection=yes;')
     
     
-    conn = pyodbc.connect('DRIVER={SQL Server};'
-    'SERVER=finalyearproject2022.database.windows.net,1433', 
-    'user=lapzai98;' 
-    'password=Lcl19980413;'
-    'database=dataVisual;')
+    conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
+    'SERVER=tcp:finalyearproject2022.database.windows.net;'
+    'PORT=1433;'
+    'DATABASE=dataVisual;'
+    'UID=lapzai98;' 
+    'PWD=Lcl19980413;'
+    )
                         
     # cursor = conn.cursor()
     # cursor.execute('SELECT' 
@@ -111,11 +113,13 @@ def returnDeliveryAddress():
     #     'FROM [FYP].[dbo].[ADDRESS]'
     #     'WHERE ID BETWEEN 1 AND 10')
 
-    conn = pyodbc.connect('DRIVER={SQL Server};'
-    'SERVER=finalyearproject2022.database.windows.net,1433', 
-    'user=lapzai98;' 
-    'password=Lcl19980413;'
-    'database=dataVisual;')
+    conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
+    'SERVER=tcp:finalyearproject2022.database.windows.net;'
+    'PORT=1433;'
+    'DATABASE=dataVisual;'
+    'UID=lapzai98;' 
+    'PWD=Lcl19980413;'
+    )
 
     cursor = conn.cursor()
     cursor.execute('SELECT' 
@@ -558,11 +562,13 @@ def retrieveData():
     #                     'Database=FYP;'
     #                     'Trusted_Connection=yes;')
 
-    conn = pyodbc.connect('DRIVER={SQL Server};'
-    'SERVER=finalyearproject2022.database.windows.net,1433', 
-    'user=lapzai98;' 
-    'password=Lcl19980413;'
-    'database=dataVisual;')
+    conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
+    'SERVER=tcp:finalyearproject2022.database.windows.net;'
+    'PORT=1433;'
+    'DATABASE=dataVisual;'
+    'UID=lapzai98;' 
+    'PWD=Lcl19980413;'
+    )
 
     database = {}
     database['pickup_datetime'] = []
