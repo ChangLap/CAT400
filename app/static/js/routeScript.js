@@ -39,10 +39,10 @@ function initMap() {
         ];
 
         var colorName = [
-            'Green',
-            'Blue',
-            'Orange',
-            'Red'
+            'green',
+            'blue',
+            'orange',
+            'red'
         ]
 
         // var listAddress = [];
@@ -487,7 +487,7 @@ function indexToAddresses(dataIndex, dataAddresses) {
 function addMarker(location, label, color, colorName) {
     var color = color.replace('#', '');
     // var urlString = 'http://www.googlemapsmarkers.com/v1/' + label + '/' + color + '/FFFFFF/' + color + '/';
-    var iconString = 'img/marker/' + colorName + '_Marker' + label;
+    var iconString = 'img/marker/' + colorName + '_Marker' + label + '.png';
     var mark = new google.maps.Marker({
         position: location,
         map: map,
