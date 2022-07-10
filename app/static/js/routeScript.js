@@ -34,14 +34,14 @@ function initMap() {
         var colorCode = [
             '#008000', //green
             '#0000FF', //blue
-            '#808080', //grey
+            '#FFA500', //orange
             '#FF0000' //red
         ];
 
         var colorName = [
             'Green',
             'Blue',
-            'Grey',
+            'Orange',
             'Red'
         ]
 
@@ -442,12 +442,12 @@ function calculateAndDisplay(directionService, directionsRenderer, json, tableLi
                 // setting for google marker to same solor as route
                 // setting google marker with labels
 
-                addMarker(route.legs[i].start_location, alphabet, json.color);
+                addMarker(route.legs[i].start_location, alphabet, json.color, json.colorName);
 
                 //for the last location labelling
                 if (i == (route.legs.length - 1)) {
                     alphabet = labels[labelIndex++ % labels.length];
-                    addMarker(route.legs[i].end_location, alphabet, json.color);
+                    addMarker(route.legs[i].end_location, alphabet, json.color, json.colorName);
                 }
             }
 
@@ -484,10 +484,10 @@ function indexToAddresses(dataIndex, dataAddresses) {
     return temp;
 }
 
-function addMarker(location, label, color) {
+function addMarker(location, label, color, colorName) {
     var color = color.replace('#', '');
-    var urlString = 'http://www.googlemapsmarkers.com/v1/' + label + '/' + color + '/FFFFFF/' + color + '/';
-
+    // var urlString = 'http://www.googlemapsmarkers.com/v1/' + label + '/' + color + '/FFFFFF/' + color + '/';
+    var iconString = 'img/marker/' + colorName + '_Marker' + label;
     var mark = new google.maps.Marker({
         position: location,
         map: map,
@@ -495,7 +495,7 @@ function addMarker(location, label, color) {
         {
             // http://www.googlemapsmarkers.com/v1/LABEL/COLOR/
             // http://www.googlemapsmarkers.com/v1/LABEL/FILL COLOR/LABEL COLOR/STROKE COLOR/
-            url: urlString,
+            url: iconString,
 
             // default Size(21, 34)
             scaledSize: new google.maps.Size(25, 41)
