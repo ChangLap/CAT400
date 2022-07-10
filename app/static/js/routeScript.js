@@ -340,7 +340,7 @@ function initMap() {
                 clearInterval(interval);
                 $('#startButton').prop('disabled', false);
                 $('#stopButton').prop('disabled', true);
-            }, (refresh * 10));
+            }, (refresh * 30));
         });
 
         $('#stopButton').click(function () {
