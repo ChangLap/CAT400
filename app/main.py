@@ -50,28 +50,30 @@ def returnPickupAddress():
 
     # conn = pyodbc.connect('Driver={SQL Server};'
     #                     'Server=MSI\SQLEXPRESS;'
-    #                     'Database=IMPORT;'
+    #                     'Database=FYP;'
     #                     'Trusted_Connection=yes;')
+    
+    
+    conn = pyodbc.connect('DRIVER={SQL Server};'
+    'SERVER=finalyearproject2022.database.windows.net,1433', 
+    'user=lapzai98;' 
+    'password=Lcl19980413;'
+    'database=dataVisual;')
+                        
     # cursor = conn.cursor()
     # cursor.execute('SELECT' 
-    #     '[pickup_longitude]'
-    #     ',[pickup_latitude]'
-    #     'FROM [IMPORT].[dbo].[yellow_tripdata_2016_01]'
+    #     '[pickup_latitude]'
+    #     ',[pickup_longitude]'
+    #     'FROM [FYP].[dbo].[ADDRESS]'
     #     'WHERE ID BETWEEN 1 AND 10')
 
-    conn = pyodbc.connect('Driver={SQL Server};'
-                        'Server=MSI\SQLEXPRESS;'
-                        'Database=FYP;'
-                        'Trusted_Connection=yes;')
-                        
     cursor = conn.cursor()
     cursor.execute('SELECT' 
         '[pickup_latitude]'
         ',[pickup_longitude]'
-        'FROM [FYP].[dbo].[ADDRESS]'
+        'FROM [dbo].[ADDRESS]'
         'WHERE ID BETWEEN 1 AND 10')
 
-    
     for i in cursor:
         
         temp = {
@@ -99,25 +101,27 @@ def returnDeliveryAddress():
 
     # conn = pyodbc.connect('Driver={SQL Server};'
     #                     'Server=MSI\SQLEXPRESS;'
-    #                     'Database=IMPORT;'
+    #                     'Database=FYP;'
     #                     'Trusted_Connection=yes;')
+                        
     # cursor = conn.cursor()
     # cursor.execute('SELECT' 
     #     '[dropoff_latitude]'
     #     ',[dropoff_longitude]'
-    #     'FROM [IMPORT].[dbo].[yellow_tripdata_2016_01]'
+    #     'FROM [FYP].[dbo].[ADDRESS]'
     #     'WHERE ID BETWEEN 1 AND 10')
 
-    conn = pyodbc.connect('Driver={SQL Server};'
-                        'Server=MSI\SQLEXPRESS;'
-                        'Database=FYP;'
-                        'Trusted_Connection=yes;')
-                        
+    conn = pyodbc.connect('DRIVER={SQL Server};'
+    'SERVER=finalyearproject2022.database.windows.net,1433', 
+    'user=lapzai98;' 
+    'password=Lcl19980413;'
+    'database=dataVisual;')
+
     cursor = conn.cursor()
     cursor.execute('SELECT' 
         '[dropoff_latitude]'
         ',[dropoff_longitude]'
-        'FROM [FYP].[dbo].[ADDRESS]'
+        'FROM [dbo].[ADDRESS]'
         'WHERE ID BETWEEN 1 AND 10')
 
     for i in cursor:
@@ -549,10 +553,16 @@ def retrieveData():
     monthFromJs = request.form['pyMonth']
     yearFromJs = request.form['pyYear']
 
-    conn = pyodbc.connect('Driver={SQL Server};'
-                        'Server=MSI\SQLEXPRESS;'
-                        'Database=FYP;'
-                        'Trusted_Connection=yes;')
+    # conn = pyodbc.connect('Driver={SQL Server};'
+    #                     'Server=MSI\SQLEXPRESS;'
+    #                     'Database=FYP;'
+    #                     'Trusted_Connection=yes;')
+
+    conn = pyodbc.connect('DRIVER={SQL Server};'
+    'SERVER=finalyearproject2022.database.windows.net,1433', 
+    'user=lapzai98;' 
+    'password=Lcl19980413;'
+    'database=dataVisual;')
 
     database = {}
     database['pickup_datetime'] = []
@@ -577,13 +587,21 @@ def retrieveData():
     year = int(yearFromJs)
     month = int(monthFromJs)
 
+    # cursor = conn.cursor()
+    # cursor.execute('SELECT' 
+    #     '[tpep_pickup_datetime]'
+    #     ',[tpep_dropoff_datetime]'
+    #     ',[trip_distance]'
+    #     ',[total_amount]'
+    #     'FROM [FYP].[dbo].[IMPORTED_DATA]')
+
     cursor = conn.cursor()
     cursor.execute('SELECT' 
         '[tpep_pickup_datetime]'
         ',[tpep_dropoff_datetime]'
         ',[trip_distance]'
         ',[total_amount]'
-        'FROM [FYP].[dbo].[IMPORTED_DATA]')
+        'FROM [dbo].[IMPORTED_DATA]')
         # 'WHERE ID BETWEEN 1 AND 10000')
     
     # number of days
