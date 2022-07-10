@@ -689,7 +689,8 @@ def retrieveData():
     return jsonify(output)
 
 def changeDatetime(string):
-    string_temp = datetime.strptime(string,'%Y-%m-%d %H:%M:%S.0%f')
+    # string_temp = datetime.strptime(string,'%Y-%m-%d %H:%M:%S.0%f')
+    string_temp = datetime.strptime(string,'%Y-%m-%d %H:%M:%S')
     return string_temp
 
 # # this is required function for running web server
