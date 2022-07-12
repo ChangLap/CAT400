@@ -531,7 +531,7 @@ function currentLocation(curMarker) {
             if (stat == 'updated') {
                 var loc = new google.maps.LatLng(latitude, longitude);
                 curMarker.setPosition(loc);
-                map.setCenter(latitude, longitude, 12);
+                map.setCenter(loc, 12);
             }
         })
         .fail(function () {
