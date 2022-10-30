@@ -4,6 +4,7 @@ let map;
 let listAddresses = [];
 // marker array
 let markers = [];
+
 // direction renderer arrays
 
 function initMap() {

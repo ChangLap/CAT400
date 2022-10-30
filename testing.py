@@ -1,1 +1,0 @@
-output['duration']['range'] = '' + str("{:.2f}".format(output['duration']['min'])) + ' - ' + str("{:.2f}".format(output['duration']['max']))
